@@ -1,0 +1,335 @@
+conn = new Mongo("DESKTOP-COQH3QH:20003")
+connection to DESKTOP-COQH3QH:20003
+> TestDB=conn.getDB("Equipos")
+Equipos
+> testDB.isMaster()
+uncaught exception: ReferenceError: testDB is not defined :
+@(shell):1:1
+> TestDB.isMaster()
+{
+        "topologyVersion" : {
+                "processId" : ObjectId("642b8cc40adee2e3a2c7f8d0"),
+                "counter" : NumberLong(10)
+        },
+        "hosts" : [
+                "DESKTOP-COQH3QH:20003",
+                "DESKTOP-COQH3QH:20004",
+                "DESKTOP-COQH3QH:20005"
+        ],
+        "setName" : "MireplicaSet",
+        "setVersion" : 5,
+        "ismaster" : true,
+        "secondary" : false,
+        "primary" : "DESKTOP-COQH3QH:20003",
+        "me" : "DESKTOP-COQH3QH:20003",
+        "electionId" : ObjectId("7fffffff0000000000000001"),
+        "lastWrite" : {
+                "opTime" : {
+                        "ts" : Timestamp(1680576091, 1),
+                        "t" : NumberLong(1)
+                },
+                "lastWriteDate" : ISODate("2023-04-04T02:41:31Z"),
+                "majorityOpTime" : {
+                        "ts" : Timestamp(1680576091, 1),
+                        "t" : NumberLong(1)
+                },
+                "majorityWriteDate" : ISODate("2023-04-04T02:41:31Z")
+        },
+        "maxBsonObjectSize" : 16777216,
+        "maxMessageSizeBytes" : 48000000,
+        "maxWriteBatchSize" : 100000,
+        "localTime" : ISODate("2023-04-04T02:46:45.593Z"),
+        "logicalSessionTimeoutMinutes" : 30,
+        "connectionId" : 15,
+        "minWireVersion" : 0,
+        "maxWireVersion" : 13,
+        "readOnly" : false,
+        "ok" : 1,
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1680576091, 1),
+                "signature" : {
+                        "hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+                        "keyId" : NumberLong(0)
+                }
+        },
+        "operationTime" : Timestamp(1680576091, 1)
+}
+>
+>
+> testDB.Equipos.insert(
+... {
+... "_id":5,
+... "Nombre": "Nirvana",
+... "Numero de jugadores":5
+... });
+uncaught exception: ReferenceError: testDB is not defined :
+@(shell):1:1
+> TestDB.Equipos.inser(
+... {
+... "_id":5,
+... "Nombre": "Nirvana",
+... "Numero de jugadores":5
+... })t
+uncaught exception: SyntaxError: unexpected token: identifier :
+@(shell):6:2
+> TestDB.Equipos.insert(
+... {
+... "_id":5,
+... "Nombre": "Nirvana",
+... "Numero de jugadores":5
+... });
+WriteResult({ "nInserted" : 1 })
+> TestDB.Equipos.insert(
+... {
+... "_id":6,
+... "Nombre": "iron maiden",
+... "Numero de jugadores":6
+... });
+WriteResult({ "nInserted" : 1 })
+> TestDB.Equipos.count()
+2
+> connSecondary = New mongo("DESKTOP-COQH2QH:20004")
+uncaught exception: SyntaxError: unexpected token: identifier :
+@(shell):1:20
+> connSecondary = new Mongo("DESKTOP-COQH2QH:20004")
+Error: couldn't connect to server DESKTOP-COQH2QH:20004, connection attempt failed: HostNotFound: Could not find address for DESKTOP-COQH2QH:20004: SocketException: Host desconocido. :
+@(shell):1:17
+> connSecondary = new Mongo("DESKTOP-COQH3QH:20004")
+connection to DESKTOP-COQH3QH:20004
+> secondaryTestDB = connSecondary.getDB("Equipos")
+Equipos
+> secondaryTestDB.isMaster()
+{
+        "topologyVersion" : {
+                "processId" : ObjectId("642b8cc385c02e3d0c4eee35"),
+                "counter" : NumberLong(5)
+        },
+        "hosts" : [
+                "DESKTOP-COQH3QH:20003",
+                "DESKTOP-COQH3QH:20004",
+                "DESKTOP-COQH3QH:20005"
+        ],
+        "setName" : "MireplicaSet",
+        "setVersion" : 5,
+        "ismaster" : false,
+        "secondary" : true,
+        "primary" : "DESKTOP-COQH3QH:20003",
+        "me" : "DESKTOP-COQH3QH:20004",
+        "lastWrite" : {
+                "opTime" : {
+                        "ts" : Timestamp(1680576833, 1),
+                        "t" : NumberLong(1)
+                },
+                "lastWriteDate" : ISODate("2023-04-04T02:53:53Z"),
+                "majorityOpTime" : {
+                        "ts" : Timestamp(1680576833, 1),
+                        "t" : NumberLong(1)
+                },
+                "majorityWriteDate" : ISODate("2023-04-04T02:53:53Z")
+        },
+        "maxBsonObjectSize" : 16777216,
+        "maxMessageSizeBytes" : 48000000,
+        "maxWriteBatchSize" : 100000,
+        "localTime" : ISODate("2023-04-04T02:59:18.923Z"),
+        "logicalSessionTimeoutMinutes" : 30,
+        "connectionId" : 12,
+        "minWireVersion" : 0,
+        "maxWireVersion" : 13,
+        "readOnly" : false,
+        "ok" : 1,
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1680576833, 1),
+                "signature" : {
+                        "hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+                        "keyId" : NumberLong(0)
+                }
+        },
+        "operationTime" : Timestamp(1680576833, 1)
+}
+> secondaryTestDB = connSecondary.getDB("Equipos")
+Equipos
+> TestDB.Equipos.count()
+2
+> TestDB.Equipos.find().pretty()
+{ "_id" : 5, "Nombre" : "Nirvana", "Numero de jugadores" : 5 }
+{ "_id" : 6, "Nombre" : "iron maiden", "Numero de jugadores" : 6 }
+> connSecondary = new Mongo ("DESKTOP-COQH3QH:20005")
+connection to DESKTOP-COQH3QH:20005
+> secondaryTestDB = connSecondary.getDB("Equipos")
+Equipos
+> TestDB.Equipos.count()
+2
+> TestDB.Equipos.find().pretty()
+{ "_id" : 5, "Nombre" : "Nirvana", "Numero de jugadores" : 5 }
+{ "_id" : 6, "Nombre" : "iron maiden", "Numero de jugadores" : 6 }
+> secondaryTestDB.isMaster()
+{
+        "topologyVersion" : {
+                "processId" : ObjectId("642b8cc332dfc46ec98a6003"),
+                "counter" : NumberLong(5)
+        },
+        "hosts" : [
+                "DESKTOP-COQH3QH:20003",
+                "DESKTOP-COQH3QH:20004",
+                "DESKTOP-COQH3QH:20005"
+        ],
+        "setName" : "MireplicaSet",
+        "setVersion" : 5,
+        "ismaster" : false,
+        "secondary" : true,
+        "primary" : "DESKTOP-COQH3QH:20003",
+        "me" : "DESKTOP-COQH3QH:20005",
+        "lastWrite" : {
+                "opTime" : {
+                        "ts" : Timestamp(1680576833, 1),
+                        "t" : NumberLong(1)
+                },
+                "lastWriteDate" : ISODate("2023-04-04T02:53:53Z"),
+                "majorityOpTime" : {
+                        "ts" : Timestamp(1680576833, 1),
+                        "t" : NumberLong(1)
+                },
+                "majorityWriteDate" : ISODate("2023-04-04T02:53:53Z")
+        },
+        "maxBsonObjectSize" : 16777216,
+        "maxMessageSizeBytes" : 48000000,
+        "maxWriteBatchSize" : 100000,
+        "localTime" : ISODate("2023-04-04T03:03:35.722Z"),
+        "logicalSessionTimeoutMinutes" : 30,
+        "connectionId" : 10,
+        "minWireVersion" : 0,
+        "maxWireVersion" : 13,
+        "readOnly" : false,
+        "ok" : 1,
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1680576833, 1),
+                "signature" : {
+                        "hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+                        "keyId" : NumberLong(0)
+                }
+        },
+        "operationTime" : Timestamp(1680576833, 1)
+}
+> connPrimary = new Mongo("localhost:20003")
+connection to localhost:20003
+> primaryDB = connPrimary.getDB("Equipos")
+Equipos
+> primaryDB.isMaster()
+{
+        "topologyVersion" : {
+                "processId" : ObjectId("642b8cc40adee2e3a2c7f8d0"),
+                "counter" : NumberLong(10)
+        },
+        "hosts" : [
+                "DESKTOP-COQH3QH:20003",
+                "DESKTOP-COQH3QH:20004",
+                "DESKTOP-COQH3QH:20005"
+        ],
+        "setName" : "MireplicaSet",
+        "setVersion" : 5,
+        "ismaster" : true,
+        "secondary" : false,
+        "primary" : "DESKTOP-COQH3QH:20003",
+        "me" : "DESKTOP-COQH3QH:20003",
+        "electionId" : ObjectId("7fffffff0000000000000001"),
+        "lastWrite" : {
+                "opTime" : {
+                        "ts" : Timestamp(1680576833, 1),
+                        "t" : NumberLong(1)
+                },
+                "lastWriteDate" : ISODate("2023-04-04T02:53:53Z"),
+                "majorityOpTime" : {
+                        "ts" : Timestamp(1680576833, 1),
+                        "t" : NumberLong(1)
+                },
+                "majorityWriteDate" : ISODate("2023-04-04T02:53:53Z")
+        },
+        "maxBsonObjectSize" : 16777216,
+        "maxMessageSizeBytes" : 48000000,
+        "maxWriteBatchSize" : 100000,
+        "localTime" : ISODate("2023-04-04T03:06:49.818Z"),
+        "logicalSessionTimeoutMinutes" : 30,
+        "connectionId" : 17,
+        "minWireVersion" : 0,
+        "maxWireVersion" : 13,
+        "readOnly" : false,
+        "ok" : 1,
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1680576833, 1),
+                "signature" : {
+                        "hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+                        "keyId" : NumberLong(0)
+                }
+        },
+        "operationTime" : Timestamp(1680576833, 1)
+}
+> primaryDB.adminCommand({shutdown:1})
+uncaught exception: Error: error doing query: failed: network error while attempting to run command 'shutdown' on host 'localhost:20003'  :
+DB.prototype.runCommand@src/mongo/shell/db.js:188:19
+DB.prototype.adminCommand@src/mongo/shell/db.js:200:12
+@(shell):1:1
+> primaryDB.adminCommand({shutdown:1});
+Error: socket exception [CONNECT_ERROR] server [couldn't connect to server localhost:20003, connection attempt failed: SocketException: Error connecting to localhost:20003 (127.0.0.1:20003) :: caused by :: No se puede establecer una conexi�n ya que el equipo de destino deneg� expresamente dicha conexi�n.] :
+runClientFunctionWithRetries@src/mongo/shell/session.js:371:27
+runCommand@src/mongo/shell/session.js:466:25
+DB.prototype._runCommandImpl@src/mongo/shell/db.js:166:12
+DB.prototype.runCommand@src/mongo/shell/db.js:181:16
+DB.prototype.adminCommand@src/mongo/shell/db.js:200:12
+@(shell):1:1
+> connNewPrimary = new Mongo("localhost:20004")
+connection to localhost:20004
+> newPrimaryDB = connNewPrimary.getDB("Equipos")
+Equipos
+> newPrimaryDB.IsMaster()
+uncaught exception: TypeError: newPrimaryDB.IsMaster is not a function :
+@(shell):1:1
+> newPrimaryDB.isMaster()
+{
+        "topologyVersion" : {
+                "processId" : ObjectId("642b8cc385c02e3d0c4eee35"),
+                "counter" : NumberLong(8)
+        },
+        "hosts" : [
+                "DESKTOP-COQH3QH:20003",
+                "DESKTOP-COQH3QH:20004",
+                "DESKTOP-COQH3QH:20005"
+        ],
+        "setName" : "MireplicaSet",
+        "setVersion" : 5,
+        "ismaster" : true,
+        "secondary" : false,
+        "primary" : "DESKTOP-COQH3QH:20004",
+        "me" : "DESKTOP-COQH3QH:20004",
+        "electionId" : ObjectId("7fffffff0000000000000002"),
+        "lastWrite" : {
+                "opTime" : {
+                        "ts" : Timestamp(1680577759, 2),
+                        "t" : NumberLong(2)
+                },
+                "lastWriteDate" : ISODate("2023-04-04T03:09:19Z"),
+                "majorityOpTime" : {
+                        "ts" : Timestamp(1680577759, 2),
+                        "t" : NumberLong(2)
+                },
+                "majorityWriteDate" : ISODate("2023-04-04T03:09:19Z")
+        },
+        "maxBsonObjectSize" : 16777216,
+        "maxMessageSizeBytes" : 48000000,
+        "maxWriteBatchSize" : 100000,
+        "localTime" : ISODate("2023-04-04T03:13:09.241Z"),
+        "logicalSessionTimeoutMinutes" : 30,
+        "connectionId" : 34,
+        "minWireVersion" : 0,
+        "maxWireVersion" : 13,
+        "readOnly" : false,
+        "ok" : 1,
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1680577759, 2),
+                "signature" : {
+                        "hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+                        "keyId" : NumberLong(0)
+                }
+        },
+        "operationTime" : Timestamp(1680577759, 2)
+}
+>

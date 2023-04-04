@@ -1,0 +1,81 @@
+[{
+  "_id": 1,
+  "Nombre": "Metallica",
+  "# de puntos en el 1 set": 20
+},{
+  "_id": 0,
+  "Nombre": "Metallica",
+  "# de puntos en el 1 set": 20
+},{
+  "_id": 2,
+  "Nombre": "Metallica",
+  "# de puntos en el 2 set": 15
+},{
+  "_id": 3,
+  "Nombre": "Metallica",
+  "# de puntos en el 4 set": 18
+},{
+  "_id": 4,
+  "Nombre": "Metallica",
+  "# de puntos en el 5 set": 23
+},{
+  "_id": 5,
+  "Nombre": "Kiss",
+  "# de puntos en el 1 set": 15
+},{
+  "_id": 6,
+  "Nombre": "Kiss",
+  "# de puntos en el 2 set": 19
+},{
+  "_id": 7,
+  "Nombre": "Kiss",
+  "# de puntos en el 3 set": 23
+},{
+  "_id": 8,
+  "Nombre": "Kiss",
+  "# de puntos en el 4 set": 20
+},{
+  "_id": 9,
+  "Nombre": "Kiss",
+  "# de puntos en el 5 set": 25
+},{
+  "_id": 10,
+  "Nombre": "Zeppelin",
+  "# de puntos en el 1 set": 20
+},{
+  "_id": 11,
+  "Nombre": "Zeppelin",
+  "# de puntos en el 2 set": 25
+},{
+  "_id": 12,
+  "Nombre": "Zeppelin",
+  "# de puntos en el 3 set": 15
+},{
+  "_id": 13,
+  "Nombre": "Zeppelin",
+  "# de puntos en el 4 set": 18
+},{
+  "_id": 14,
+  "Nombre": "Zeppelin",
+  "# de puntos en el 5 set": 13
+},{
+  "_id": 15,
+  "Nombre": "Beatles",
+  "# de puntos en el 1 set": 8
+},{
+  "_id": 16,
+  "Nombre": "Beatles",
+  "# de puntos en el 2 set": 15
+},{
+  "_id": 17,
+  "Nombre": "Beatles",
+  "# de puntos en el 3 set": 18
+},{
+  "_id": 18,
+  "Nombre": "Beatles",
+  "# de puntos en el 4 set": 24
+},{
+  "_id": 19,
+  "Nombre": "Beatles",
+  "# de puntos en el 5 set": 17
+}]

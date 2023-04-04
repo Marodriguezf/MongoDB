@@ -1,0 +1,17 @@
+[{
+  "_id": 1,
+  "Nombre": "Metallica",
+  "Numero de jugadores": 4
+},{
+  "_id": 2,
+  "Nombre": "Kiss",
+  "Numero de jugadores": 4
+},{
+  "_id": 3,
+  "Nombre": "Zeppelin",
+  "Numero de jugadores": 4
+},{
+  "_id": 4,
+  "Nombre": "Beatles",
+  "Numero de jugadores": 5
+}]

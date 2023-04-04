@@ -1,0 +1,21 @@
+[{
+  "_id": 1,
+  "Nombre": "Andrés Morales",
+  "Cargo": "entrenador",
+  "Equipo": "Metallica"
+},{
+  "_id": 2,
+  "Nombre": "Carol Sanchez",
+  "Cargo": "entrenador",
+  "Equipo": "Zeppelin"
+},{
+  "_id": 3,
+  "Nombre": "Andrea Franco",
+  "Cargo": "entrenador",
+  "Equipo": "Kiss"
+},{
+  "_id": 4,
+  "Nombre": "Camilo Lopez",
+  "Cargo": "entrenador",
+  "Equipo": "Beatles"
+}]
