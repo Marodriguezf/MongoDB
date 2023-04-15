@@ -1,0 +1,61 @@
+> shard1 = new Mongo("localhost:20000")
+connection to localhost:20000
+> shard1DB = shard1.getDB("Torneo")
+Torneo
+> shard1DB.Deportistas.count()
+0
+> shard1DB.Arbitros.count()
+0
+> shard1DB.Entrenadores.count()
+0
+> shard2= new Mongo("localhost:20001")
+connection to localhost:20001
+> shard2DB = shard2.getDB("Torneo")
+Torneo
+> shard2DB.Deportistas.count()
+0
+> shard2DB.Arbitros.count()
+0
+>    shard2DB.Entrenadores.count()
+0
+> shard3= new Mongo("localhost:20002")
+connection to localhost:20002
+> shard3DB = shard3.getDB("Torneo")
+Torneo
+> shard3DB.Deportistas.count()
+10000
+> shard3DB.Arbitros.count()
+5
+>    shard3DB.Entrenadores.count()
+5
+> shard1 = new Mongo("localhost:20000")
+connection to localhost:20000
+> shard1DB = shard1.getDB("Torneo")
+Torneo
+> shard1DB.Deportistas.count()
+0
+>     shard1DB.Arbitros.count()
+0
+> shard1DB.Entrenadores.count()
+0
+> shard2= new Mongo("localhost:20001")
+connection to localhost:20001
+> shard2DB = shard2.getDB("Torneo")
+Torneo
+> shard2DB.Deportistas.count()
+0
+> shard2DB.Arbitros.count()
+0
+>    shard2DB.Entrenadores.count()
+0
+> shard3= new Mongo("localhost:20002")
+connection to localhost:20002
+> shard3DB = shard3.getDB("Torneo")
+Torneo
+> shard3DB.Deportistas.count()
+10000
+> shard3DB.Arbitros.count()
+5
+> shard3DB.Entrenadores.count()
+5
+>

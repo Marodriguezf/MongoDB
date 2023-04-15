@@ -1,0 +1,190 @@
+db = (new Mongo("localhost:20006")).getDB("Torneo")
+Torneo
+mongos> for (i= 0; i < 10000; i++) {   db.Deportistas.insert({nombres : "nombres" +i, equipos : "equipo elegido " +i, date: new Date() }); }
+WriteResult({ "nInserted" : 1 })
+mongos> db.Arbitros.insertMany( [
+... {id_arbitros:9, nombre: 'Sandra', pais: 'USA', cargo: 'Arbitro'},                          {id_arbitros:10, nombre:'angela', pais: 'USA', cargo: 'Arbitro'},  {id_arbitros:11,nombre:'juan', pais: 'Colombia', cargo: 'Arbitro'},                      {id_arbitros:12, nombre: 'mario', pais: 'México', cargo: 'Arbitro'},                                {id_arbitros:13, nombre: 'andres', pais: 'Colombia', cargo: 'Arbitro'}
+...  ]);
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("6437707b0a94f80f9d5ecde7"),
+                ObjectId("6437707b0a94f80f9d5ecde8"),
+                ObjectId("6437707b0a94f80f9d5ecde9"),
+                ObjectId("6437707b0a94f80f9d5ecdea"),
+                ObjectId("6437707b0a94f80f9d5ecdeb")
+        ]
+}
+mongos> db.Entrenadores.insertMany( [
+... {id_entrenadores:9, nombre: 'Maria', equipo: 'beatles'},                          {id_entrenadores:10, nombre:'Ivonne', equipo: 'metallica'},  {id_entrenadores:11,nombre:'Ana', equipo: 'iron maiden'},                      {id_entrenadores:12, nombre: 'felipe', equipo: 'zeppelin'},                                {id_entrenadores:13, nombre: 'Fabian', equipo: 'kiss'}
+...  ]);
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("643770a10a94f80f9d5ecdec"),
+                ObjectId("643770a10a94f80f9d5ecded"),
+                ObjectId("643770a10a94f80f9d5ecdee"),
+                ObjectId("643770a10a94f80f9d5ecdef"),
+                ObjectId("643770a10a94f80f9d5ecdf0")
+        ]
+}
+mongos> db.Deportistas.count()
+10000
+mongos> db.Arbitros.count()
+5
+mongos> db.Entrenadores.count()
+5
+mongos> shard1 = new Mongo("localhost:20006")
+connection to localhost:20006
+mongos> sh.status()
+--- Sharding Status ---
+  sharding version: {
+        "_id" : 1,
+        "minCompatibleVersion" : 5,
+        "currentVersion" : 6,
+        "clusterId" : ObjectId("64376d8c37528bde15907cad")
+  }
+  shards:
+        {  "_id" : "__unknown_name__-rs0",  "host" : "__unknown_name__-rs0/DESKTOP-COQH3QH:20000",  "state" : 1,  "topologyTime" : Timestamp(1681354168, 4) }
+        {  "_id" : "__unknown_name__-rs1",  "host" : "__unknown_name__-rs1/DESKTOP-COQH3QH:20001",  "state" : 1,  "topologyTime" : Timestamp(1681354170, 1) }
+        {  "_id" : "__unknown_name__-rs2",  "host" : "__unknown_name__-rs2/DESKTOP-COQH3QH:20002",  "state" : 1,  "topologyTime" : Timestamp(1681354170, 6) }
+  active mongoses:
+        "5.0.15" : 1
+  autosplit:
+        Currently enabled: no
+  balancer:
+        Currently enabled: no
+        Currently running: no
+        Failed balancer rounds in last 5 attempts: 0
+        Migration results for the last 24 hours:
+                No recent migrations
+  databases:
+        {  "_id" : "Torneo",  "primary" : "__unknown_name__-rs2",  "partitioned" : false,  "version" : {  "uuid" : UUID("a3fb3abe-19d4-4992-9208-926c28707745"),  "timestamp" : Timestamp(1681354340, 1),  "lastMod" : 1 } }
+        {  "_id" : "config",  "primary" : "config",  "partitioned" : true }
+mongos> sh.enableSharding("Torneo")
+{
+        "ok" : 1,
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1681357398, 1),
+                "signature" : {
+                        "hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+                        "keyId" : NumberLong(0)
+                }
+        },
+        "operationTime" : Timestamp(1681357398, 1)
+        mongos> db.Deportistas.createIndex({nombres:1})
+{
+        "raw" : {
+                "__unknown_name__-rs2/DESKTOP-COQH3QH:20002" : {
+                        "numIndexesBefore" : 1,
+                        "numIndexesAfter" : 2,
+                        "createdCollectionAutomatically" : false,
+                        "commitQuorum" : "votingMembers",
+                        "ok" : 1
+                }
+        },
+        "ok" : 1,
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1681583127, 3),
+                "signature" : {
+                        "hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+                        "keyId" : NumberLong(0)
+                }
+        },
+        "operationTime" : Timestamp(1681583127, 3)
+}
+mongos> sh.shardCollection("Torneo.Deportistas", {nombres: 1})
+{
+        "collectionsharded" : "Torneo.Deportistas",
+        "ok" : 1,
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1681583536, 3),
+                "signature" : {
+                        "hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+                        "keyId" : NumberLong(0)
+                }
+        },
+        "operationTime" : Timestamp(1681583535, 1)
+}
+mongos> sh.status()
+--- Sharding Status ---
+  sharding version: {
+        "_id" : 1,
+        "minCompatibleVersion" : 5,
+        "currentVersion" : 6,
+        "clusterId" : ObjectId("643ade185ad135ccf92aeb2f")
+  }
+  shards:
+        {  "_id" : "__unknown_name__-rs0",  "host" : "__unknown_name__-rs0/DESKTOP-COQH3QH:20000",  "state" : 1,  "topologyTime" : Timestamp(1681579582, 1) }
+        {  "_id" : "__unknown_name__-rs1",  "host" : "__unknown_name__-rs1/DESKTOP-COQH3QH:20001",  "state" : 1,  "topologyTime" : Timestamp(1681579583, 4) }
+        {  "_id" : "__unknown_name__-rs2",  "host" : "__unknown_name__-rs2/DESKTOP-COQH3QH:20002",  "state" : 1,  "topologyTime" : Timestamp(1681579583, 9) }
+  active mongoses:
+        "5.0.15" : 1
+  autosplit:
+        Currently enabled: no
+  balancer:
+        Currently enabled: no
+        Currently running: no
+        Failed balancer rounds in last 5 attempts: 0
+        Migration results for the last 24 hours:
+                No recent migrations
+  databases:
+        {  "_id" : "Torneo",  "primary" : "__unknown_name__-rs2",  "partitioned" : true,  "version" : {  "uuid" : UUID("c20584dd-49c3-42ab-baf2-fed6e18d3c2f"),  "timestamp" : Timestamp(1681579643, 2),  "lastMod" : 1 } }
+                Torneo.Deportistas
+                        shard key: { "nombres" : 1 }
+                        unique: false
+                        balancing: true
+                        chunks:
+                                __unknown_name__-rs2    1
+                        { "nombres" : { "$minKey" : 1 } } -->> { "nombres" : { "$maxKey" : 1 } } on : __unknown_name__-rs2 Timestamp(1, 0)
+        {  "_id" : "config",  "primary" : "config",  "partitioned" : true }
+mongos> sh.getBalancerState()
+false
+mongos> sh.setBlancerState(true)
+TypeError: sh.setBlancerState is not a function :
+@(shell):1:1
+mongos> sh.setBalancerState(true)
+{
+        "ok" : 1,
+        "$clusterTime" : {
+                "clusterTime" : Timestamp(1681583778, 3),
+                "signature" : {
+                        "hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+                        "keyId" : NumberLong(0)
+                }
+        },
+        "operationTime" : Timestamp(1681583778, 3)
+}
+mongos> sh.status()
+--- Sharding Status ---
+  sharding version: {
+        "_id" : 1,
+        "minCompatibleVersion" : 5,
+        "currentVersion" : 6,
+        "clusterId" : ObjectId("643ade185ad135ccf92aeb2f")
+  }
+  shards:
+        {  "_id" : "__unknown_name__-rs0",  "host" : "__unknown_name__-rs0/DESKTOP-COQH3QH:20000",  "state" : 1,  "topologyTime" : Timestamp(1681579582, 1) }
+        {  "_id" : "__unknown_name__-rs1",  "host" : "__unknown_name__-rs1/DESKTOP-COQH3QH:20001",  "state" : 1,  "topologyTime" : Timestamp(1681579583, 4) }
+        {  "_id" : "__unknown_name__-rs2",  "host" : "__unknown_name__-rs2/DESKTOP-COQH3QH:20002",  "state" : 1,  "topologyTime" : Timestamp(1681579583, 9) }
+  active mongoses:
+        "5.0.15" : 1
+  autosplit:
+        Currently enabled: yes
+  balancer:
+        Currently enabled: yes
+        Currently running: no
+        Failed balancer rounds in last 5 attempts: 0
+        Migration results for the last 24 hours:
+                No recent migrations
+  databases:
+        {  "_id" : "Torneo",  "primary" : "__unknown_name__-rs2",  "partitioned" : true,  "version" : {  "uuid" : UUID("c20584dd-49c3-42ab-baf2-fed6e18d3c2f"),  "timestamp" : Timestamp(1681579643, 2),  "lastMod" : 1 } }
+                Torneo.Deportistas
+                        shard key: { "nombres" : 1 }
+                        unique: false
+                        balancing: true
+                        chunks:
+                                __unknown_name__-rs2    1
+                        { "nombres" : { "$minKey" : 1 } } -->> { "nombres" : { "$maxKey" : 1 } } on : __unknown_name__-rs2 Timestamp(1, 0)
+        {  "_id" : "config",  "primary" : "config",  "partitioned" : true }
+mongos>
